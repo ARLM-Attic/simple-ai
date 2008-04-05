@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIEdge.cs" />
+    <Compile Include="AIMotionController.cs" />
     <Compile Include="Behaviours\AIBehaviour.cs" />
     <Compile Include="Behaviours\AIBehaviourCyclicRoute.cs" />
     <Compile Include="Behaviours\AIBehaviourFindPath.cs" />

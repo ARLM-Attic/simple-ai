@@ -63,6 +63,7 @@
     <Compile Include="SimpleAIEngineToGame\DrawableAICharacter.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAIMap.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAIWorld.cs" />
+    <Compile Include="SimpleAIEngineToGame\TestMapFiller.cs" />
     <Compile Include="SimpleAIEngineToGame\ThirdPersonCamera.cs" />
     <Compile Include="TestGame.cs" />
   </ItemGroup>

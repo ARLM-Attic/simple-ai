@@ -42,7 +42,7 @@ namespace TestFramework
      
             // Game should run as fast as possible.
             IsFixedTimeStep = false;
-            graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
                       
             aiEngine = new AIEngine((Game)this);
             this.Components.Add(aiEngine);
@@ -54,7 +54,7 @@ namespace TestFramework
 
 
             sEngine = new SEngine((Game)this, graphics);
-            this.Components.Add(sEngine);
+            //this.Components.Add(sEngine);
 
            
         }
@@ -84,11 +84,6 @@ namespace TestFramework
             lineBatch = new DynamicLineBatch(GraphicsDevice);
                         
             AIMap newMap = new DrawableAIMap(GraphicsDevice, 55, 55, 100.0f, 100.0f);
-            newMap.Position = new Vector3(
-                GraphicsDevice.Viewport.Width * 0.5f,
-                GraphicsDevice.Viewport.Height * 0.5f,
-                .0f);
-
             aiEngine.World.Maps.Add(ref newMap);
 
             cam = new ThirdPersonCamera((Game)this);
@@ -98,6 +93,7 @@ namespace TestFramework
             cam.LookAt = new Vector3(0.0f, 0.0f, 0.0f);
             
             ((DrawableAIMap)(newMap)).Camera = cam;
+            // this ensures, camera will get updated automatically
             this.Components.Add(cam);
           
             // TODO: use this.Content to load your game content here
@@ -112,55 +108,51 @@ namespace TestFramework
 
             // Reposition character
             character.Position = newMap.Node(7, 7).Position;
+            // space occuppier by our character
             character.Radius = 0.5f;
 
+            AIMotionController moCo = new AIMotionController();
+            character.MotionController = moCo;
+            moCo.MaxRotation = 90.0f;
+            moCo.MaxSpeed = 5.0f;
+
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
-            
+
+            // 1st node
             AINode tmpNode = newMap.Node(5, 5);
             bCycle.AddPoint(ref tmpNode);
 
+            // 2nd node
             tmpNode = newMap.Node(12, 10);
             bCycle.AddPoint(ref tmpNode);
 
+            // 3rd node
             tmpNode = newMap.Node(40, 40);
             bCycle.AddPoint(ref tmpNode);
 
+            //...
             tmpNode = newMap.Node(40, 22);
             bCycle.AddPoint(ref tmpNode);
 
+            //...
             tmpNode = newMap.Node(5, 44);
             bCycle.AddPoint(ref tmpNode);
 
+            // use our dynamic line batch for behaviour rendering
             ((DrawableAIBehaviourCycleRoute)(bCycle)).LineBatch = this.lineBatch;
-
-
-
-
-            ///////
-            //((DrawableAIBehaviourGoTo)(bGoto)).LineBatch = this.lineBatch;
 
             // Attach behaviour to character
             character.CurrentBehaviour = (AIBehaviour)bCycle;
-            
-            
-            //bGoto.Character = character;
-            //bGoto.Map = newMap;
-            
+                        
             // Instruct Drawable character what to use for rendering
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
             
             // Attach character to world
             aiEngine.World.Characters.Add(ref character);
 
+            // pass information about camera to the line batcher
             lineBatch.Camera = cam;
             
-            this.IsFixedTimeStep = false;
-            graphics.SynchronizeWithVerticalRetrace = false;
-            
-#if XBOX
-#else
-            this.IsMouseVisible = true;
-#endif 
         }
 
         /// <summary>
@@ -184,12 +176,8 @@ namespace TestFramework
                 this.Exit();
 
             base.Update(gameTime);
-            //pathFinder.Iterate();
-            //character.Update(gameTime);
-            //cam.LookAt = character.Position;
             aiEngine.Update(gameTime);
 
-            //Console.WriteLine(character.CurrentBehaviour.State.ToString());
         }
 
         /// <summary>

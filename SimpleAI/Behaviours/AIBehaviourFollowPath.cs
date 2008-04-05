@@ -78,8 +78,6 @@ namespace SimpleAI {
             return true;
         }
 
-        
-
         public AIPathfinder PathFinder
         {
             get { return pathFinder; }
@@ -110,7 +108,6 @@ namespace SimpleAI {
             this.state = AIBehaviourState.Idle;
             
         }
-
         
         public override void Iterate(GameTime gameTime)
         {

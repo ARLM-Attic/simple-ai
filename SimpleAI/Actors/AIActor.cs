@@ -30,6 +30,17 @@ namespace SimpleAI {
         }
          */
 
+        protected AIMotionController motionController;
+        public AIMotionController MotionController
+        {
+            get { return motionController; }
+            set 
+            {
+                motionController = value;
+                motionController.Owner = this;
+            }
+        }
+
         protected bool collidable;
         public bool Collidable
         {
@@ -164,7 +175,10 @@ namespace SimpleAI {
         }
 
 		public AIActor(){
+            orientation = new Vector3(1, 1, 0);
+            orientation.Normalize();
 
+            desiredDirection = orientation;
 		}
 
 		~AIActor(){
@@ -185,7 +199,7 @@ namespace SimpleAI {
 
         }
 
-        public virtual void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
 
             // store current position
@@ -195,20 +209,33 @@ namespace SimpleAI {
             }
 
             this.UpdateBehaviours(gameTime);
+            this.UpdatePosition(gameTime);
 
-            
+        }
+
+        public virtual void UpdatePosition(GameTime gameTime)
+        {
             // set a new position 
             if (desiredDirection.Length() > 0.0f)
             {
                 previousPosition = position;
             }
-            position += desiredDirection * 0.05f;
 
-            // set a new orientation
-            if (desiredOrientation.Length() > 0)
+            if (motionController == null)
             {
-                orientation = desiredOrientation;
+                position += desiredDirection * 0.05f;
+
+                // set a new orientation
+                if (desiredOrientation.Length() > 0)
+                {
+                    orientation = desiredOrientation;
+                }
             }
+            else
+            {
+                motionController.Update(gameTime);
+            }
+
         }
 
 		public virtual void Dispose(){

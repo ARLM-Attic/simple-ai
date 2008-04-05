@@ -37,8 +37,13 @@ namespace TestFramework.SimpleAIEngineToGame
             // draw desired orientation
             Vector3 halfSize = new Vector3(0, 0, 1);
             dynamicLineBatch.DrawLine(position + halfSize,
-                                      position + halfSize + desiredOrientation * 4.0f,
+                                      position + halfSize + this.Orientation * 4.0f,
                                       Color.GreenYellow);
+
+            dynamicLineBatch.DrawLine(position + halfSize * 0.5f,
+                          position + halfSize * 0.5f + this.desiredOrientation * 4.0f,
+                          Color.Purple);
+
         }
     }
 }
