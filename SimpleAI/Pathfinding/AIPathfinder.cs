@@ -56,7 +56,7 @@ namespace SimpleAI.Pathfinding
         protected AIPathfinderNode parentNode;
 
 
-        protected int heuristicEstimateValue = 1;
+        protected int heuristicEstimateValue = 3;
         public int HeuristicEstimateValue
         {
             get { return heuristicEstimateValue; }
