@@ -115,7 +115,7 @@ namespace TestFramework
             AIMotionController moCo = new AIMotionController();
             character.MotionController = moCo;
             moCo.MaxRotation = 90.0f;
-            moCo.MaxSpeed = 5.0f;
+            moCo.MaxSpeed = 3.0f; // m/s
 
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
 
@@ -153,6 +153,10 @@ namespace TestFramework
 
             // pass information about camera to the line batcher
             lineBatch.Camera = cam;
+
+            TestMapFiller mf = new TestMapFiller();
+            mf.FillMap(ref newMap);
+
             
         }
 
@@ -192,6 +196,22 @@ namespace TestFramework
             lineBatch.Begin();
             
                 aiEngine.Draw();
+
+                Vector3 vShift = new Vector3(0, 0, 5);
+
+                for (int w = 0; w < aiEngine.World.Maps[0].Width; w++)
+                {
+                    for (int h = 0; h < aiEngine.World.Maps[0].Height; h++)
+                    {
+                        if (aiEngine.World.Maps[0].Node(w, h).Type == 0)
+                        {
+                            lineBatch.DrawLine(
+                                aiEngine.World.Maps[0].Node(w, h).Position,
+                                aiEngine.World.Maps[0].Node(w, h).Position + vShift,
+                                Color.Red);
+                        }
+                    }
+                }
             
             lineBatch.End();
 

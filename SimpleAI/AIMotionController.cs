@@ -58,7 +58,8 @@ namespace SimpleAI
                 owner.DesiredDirection);
             float desiredChange = (float)Math.Acos(desiredChangeRaw);
 
-            float timeFactor = gameTime.ElapsedRealTime.Milliseconds / 1000.0f;
+            //float timeFactor = gameTime.ElapsedRealTime.Milliseconds / 1000.0f;
+            float timeFactor = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
             if (timeFactor == 0.0f)
             {
@@ -76,19 +77,7 @@ namespace SimpleAI
                 Vector3 vDes = owner.DesiredDirection;
                 vDes.Normalize();
                 Vector3.Cross(ref vDes, ref vUp, out vPerpendicular);
-                bool clockWise = (Vector3.Dot(owner.Orientation, vPerpendicular) > 0.0f);
-
-/*                if (clockWise)
-                {
-                    vDes.X = vDes.X * (float)Math.Cos(-maxRotationRad * timeFactor);
-                    vDes.Y = vDes.Y * (float)Math.Sin(-maxRotationRad * timeFactor);
-                }
-                else
-                {
-                    vDes.X = vDes.X * (float)Math.Cos(maxRotationRad * timeFactor);
-                    vDes.Y = vDes.Y * (float)Math.Sin(maxRotationRad * timeFactor);
-                }
- */
+                bool clockWise = (Vector3.Dot(owner.Orientation, vPerpendicular) >= 0.0f);
 
                 Matrix rotation = Matrix.Identity;
                 if (clockWise)
@@ -100,11 +89,9 @@ namespace SimpleAI
                     Matrix.CreateRotationZ(-maxRotationRad * timeFactor, out rotation);
                 }
 
-
                 vDes = Vector3.Transform(owner.Orientation, rotation);
                 vDes.Normalize();
   
-
                 owner.Orientation = vDes;
                 //owner.DesiredDirection = vDes;
 
@@ -114,8 +101,13 @@ namespace SimpleAI
                 owner.Orientation = owner.DesiredDirection;
             }
 
-            float newSpeed = ((desiredChangeRaw + 1.0f) * 0.5f) * maxSpeed;
+            if (desiredChangeRaw < 0.0f)
+            {
+                desiredChangeRaw = 0.0f;
+            }
 
+            //float newSpeed = ((desiredChangeRaw  + 1.0f) * 0.5f) * maxSpeed;
+            float newSpeed = (desiredChangeRaw) * maxSpeed;
             owner.Position += owner.Orientation * newSpeed * timeFactor;
 
             // set a new orientation

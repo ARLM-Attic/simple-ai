@@ -62,7 +62,11 @@ namespace SimpleAI.Behaviours
                 }
             }
 
-            pathfinder.Iterate();
+            for (int i = 0; i < 20; i++)
+            {
+                pathfinder.Iterate();
+            }
+
 
             switch (pathfinder.State)
             {

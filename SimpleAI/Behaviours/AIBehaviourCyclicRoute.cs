@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace SimpleAI.Behaviours
 {
@@ -44,7 +45,10 @@ namespace SimpleAI.Behaviours
             }
             else
             {
-                //currentSubBehaviour++;
+                // stop actor for a moment, until we get new desired direction
+                this.character.DesiredOrientation = new Vector3(0);
+                this.character.DesiredDirection = this.character.DesiredOrientation;
+
             }
         }
 

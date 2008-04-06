@@ -106,9 +106,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestFramework_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0</ProductName>

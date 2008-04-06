@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using System.Collections;
 using SimpleAI.Behaviours;
 using SimpleAI.Actors;
+using System;
 namespace SimpleAI {
 	public class AIActor : IAINameOwner {
 
@@ -289,7 +290,17 @@ namespace SimpleAI {
         /// <returns></returns>
         public virtual byte TypeToCost(int nodeType)
         {
-            return 1;
+            //Console.WriteLine(nodeType);
+            //Random rnd = new Random();
+            //int iRnd = 1 + (rnd.Next(3));
+            if (nodeType == 0)
+            {
+                return 255;
+            }
+            else
+            {
+                return 1;
+            }
         }
 
         public virtual void Draw()

@@ -11,6 +11,11 @@
 
 using Microsoft.Xna.Framework;
 namespace SimpleAI {
+
+    /// <summary>
+    /// A node is an element of AIMap. It holds infomation about terrain type (node type)
+    /// position of the node's centre.
+    /// </summary>
 	public class AINode {
 
 
@@ -20,35 +25,45 @@ namespace SimpleAI {
         private int y;
         private Vector3 position;
 
-
+        /// <summary>
+        /// Center position of a node
+        /// </summary>
         public Vector3 Position
         {
             get { return position; }
             set { position = value; }
         }
 
-        
+        /// <summary>
+        /// X index of a node
+        /// </summary>
         public int X
         {
             get { return x; }
             set { x = value; }
         }
 
-
+        /// <summary>
+        /// Y index of a node.
+        /// </summary>
         public int Y
         {
             get { return y; }
             set { y = value; }
         }
 
-
+        /// <summary>
+        /// Type of a node
+        /// </summary>
         public int Type
         {
             get { return type; }
             set { type = value; }
         }
 
-
+        /// <summary>
+        /// Reference to parent AIMap, which this node belongs to.
+        /// </summary>
         public AIMap Parent
         {
             get { return parent; }

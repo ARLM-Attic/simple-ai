@@ -167,70 +167,75 @@ namespace SimpleAI.Pathfinding
                 return;
             }
 
-            while (openQueue.Count > 0 && !forceStop)
+            //for (int iteration = 0; iteration < 100; iteration++)
             {
-                parentNode = openQueue.Pop();
 
-                if (parentNode.X == endNode.X && parentNode.Y == endNode.Y)
+                while (openQueue.Count > 0 && !forceStop)
                 {
-                    closeList.Add(parentNode);
-                    found = true;
-                    break;
-                }
+                    parentNode = openQueue.Pop();
 
-                for (int index = 0; index < 8; index++)
-                {
-                    int newX = parentNode.X + direction[index,0];
-                    int newY = parentNode.Y + direction[index,1];
-
-                    if (newX < 0 || newY < 0 || newX >= map.Width || newY >= map.Height)
+                    if (parentNode.X == endNode.X && parentNode.Y == endNode.Y)
                     {
-                        // probing out of map
-                        continue;
+                        closeList.Add(parentNode);
+                        found = true;
+                        break;
                     }
 
-                    AIPathfinderNode newNode = new AIPathfinderNode();
-                    newNode.X = newX;
-                    newNode.Y = newY;
-                    newNode.G = (map.Node(newNode.X, newNode.Y)).Type;
-
-                    int newG = parentNode.G + grid[newNode.X, newNode.Y];
-
-                    if (newG == parentNode.G)
+                    for (int index = 0; index < 8; index++)
                     {
-                        continue;
-                    }
+                        int newX = parentNode.X + direction[index, 0];
+                        int newY = parentNode.Y + direction[index, 1];
 
-                    int foundInOpenIndex = -1;
-
-                    for (int j = 0; j < openQueue.Count; j++)
-                    {
-                        if (openQueue[j].X == newNode.X && openQueue[j].Y == newNode.Y)
+                        if (newX < 0 || newY < 0 || newX >= map.Width || newY >= map.Height)
                         {
-                            foundInOpenIndex = j;
-                            break;
+                            // probing out of map
+                            continue;
                         }
+
+                        AIPathfinderNode newNode = new AIPathfinderNode();
+                        newNode.X = newX;
+                        newNode.Y = newY;
+                        newNode.G = (map.Node(newNode.X, newNode.Y)).Type;
+
+                        int newG = parentNode.G + grid[newNode.X, newNode.Y];
+
+                        if (newG == parentNode.G)
+                        {
+                            continue;
+                        }
+
+                        int foundInOpenIndex = -1;
+
+                        for (int j = 0; j < openQueue.Count; j++)
+                        {
+                            if (openQueue[j].X == newNode.X && openQueue[j].Y == newNode.Y)
+                            {
+                                foundInOpenIndex = j;
+                                break;
+                            }
+                        }
+                        if (foundInOpenIndex != -1 && openQueue[foundInOpenIndex].G <= newG)
+                        {
+                            continue;
+                        }
+
+                        newNode.PX = parentNode.X;
+                        newNode.PY = parentNode.Y;
+                        newNode.G = newG;
+
+                        newNode.H = heuristicEstimateValue * (
+                            Math.Abs(newNode.X - endNode.X) +
+                            Math.Abs(newNode.Y - endNode.Y));
+
+                        newNode.F = newNode.G + newNode.H;
+
+                        openQueue.Push(newNode);
                     }
-                    if (foundInOpenIndex != -1 && openQueue[foundInOpenIndex].G <= newG)
-                    {
-                        continue;
-                    }
-
-                    newNode.PX = parentNode.X;
-                    newNode.PY = parentNode.Y;
-                    newNode.G = newG;
-
-                    newNode.H = heuristicEstimateValue * (
-                        Math.Abs(newNode.X - endNode.X) +
-                        Math.Abs(newNode.Y - endNode.Y));
-
-                    newNode.F = newNode.G + newNode.H;
-
-                    openQueue.Push(newNode);
+                    closeList.Add(parentNode);
+                    return;
+                    //break;
                 }
-                closeList.Add(parentNode);
-                return;
-                //break;
+
             }
 
             if (found)

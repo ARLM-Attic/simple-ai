@@ -33,7 +33,8 @@ namespace SimpleAI.Behaviours
             get { return ((AIBehaviourFindPath)findPath).StartNode; }
             set 
             { 
-                ((AIBehaviourFindPath)findPath).StartNode = value; 
+                ((AIBehaviourFindPath)findPath).StartNode = value;
+                value.Type = 1;
             
             }
         }
@@ -41,7 +42,11 @@ namespace SimpleAI.Behaviours
         public AINode EndNode
         {
             get { return ((AIBehaviourFindPath)findPath).EndNode; }
-            set { ((AIBehaviourFindPath)findPath).EndNode = value; }
+            set 
+            { 
+                ((AIBehaviourFindPath)findPath).EndNode = value;
+                value.Type = 1;
+            }
         }
 
         public AIBehaviourGoTo()
