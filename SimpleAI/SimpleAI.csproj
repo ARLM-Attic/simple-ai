@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\AITail.cs" />
     <Compile Include="AIEdge.cs" />
     <Compile Include="AIMotionController.cs" />
     <Compile Include="Behaviours\AIBehaviour.cs" />

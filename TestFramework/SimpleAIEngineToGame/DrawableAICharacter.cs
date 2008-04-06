@@ -44,6 +44,17 @@ namespace TestFramework.SimpleAIEngineToGame
                           position + halfSize * 0.5f + this.desiredOrientation * 4.0f,
                           Color.Purple);
 
+            if (useTail)
+            {
+                for (int index = 0; index < tail.Count - 1; index++)
+                {
+                    dynamicLineBatch.DrawLine(
+                        tail[index],
+                        tail[index + 1],
+                        Color.Blue);
+                }
+            }
+
         }
     }
 }

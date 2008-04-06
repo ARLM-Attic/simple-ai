@@ -41,7 +41,7 @@ namespace TestFramework
             this.graphics.PreferredBackBufferHeight = 480;
      
             // Game should run as fast as possible.
-            IsFixedTimeStep = false;
+            IsFixedTimeStep = true;
             graphics.SynchronizeWithVerticalRetrace = true;
                       
             aiEngine = new AIEngine((Game)this);
@@ -102,6 +102,7 @@ namespace TestFramework
             // Create and set up character
             character = new DrawableAICharacter();
             cam.Character = character;
+            character.UseTail = true;
 
             // Attach character to a map
             character.Map = newMap;

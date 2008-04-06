@@ -12,6 +12,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections;
 using SimpleAI.Behaviours;
+using SimpleAI.Actors;
 namespace SimpleAI {
 	public class AIActor : IAINameOwner {
 
@@ -29,6 +30,42 @@ namespace SimpleAI {
             get { return lastGoodPosition; }
         }
          */
+
+        protected int tailCapacity = 500;
+        public int TailCapacity
+        {
+            get { return tailCapacity; }
+            set { tailCapacity = value; }
+        }
+
+        protected bool useTail;
+        public bool UseTail
+        {
+            get { return useTail; }
+            set 
+            { 
+                useTail = value;
+                if (useTail == true)
+                {
+                    if (tail == null)
+                    {
+                        tail = new AITail(tailCapacity);
+
+                    }
+                    else
+                    {
+                        tail.Resize(tailCapacity);
+                    }
+                }
+                else
+                {
+                    tail.Reset();
+                    tail = null;
+                }
+            }
+        }
+
+        protected AITail tail;
 
         protected AIMotionController motionController;
         public AIMotionController MotionController
@@ -210,6 +247,10 @@ namespace SimpleAI {
 
             this.UpdateBehaviours(gameTime);
             this.UpdatePosition(gameTime);
+            if (useTail)
+            {
+                this.tail.Add(ref position);
+            }
 
         }
 
