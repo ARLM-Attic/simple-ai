@@ -11,6 +11,17 @@ namespace TestFramework.SimpleAIEngineToGame
     public class DrawableAICharacter : AIActor
     {
 
+        /// <summary>
+        /// Colour used for rendering this characted debug represenation (e.g. a cylinder).
+        /// Default value set to Color.White
+        /// </summary>
+        protected Color debugColor;
+        public Color DebugColor
+        {
+            get { return debugColor; }
+            set { debugColor = value; }
+        }
+
         protected DynamicLineBatch dynamicLineBatch;
 
         public DynamicLineBatch DynamicLineBatch
@@ -53,6 +64,30 @@ namespace TestFramework.SimpleAIEngineToGame
                         tail[index + 1],
                         Color.Blue);
                 }
+            }
+
+            Matrix rotation = Matrix.Identity;
+                      
+            for (int index = 0; index < sensors.Count; index++)
+            {
+                rotation = Matrix.CreateRotationZ(sensors[index].Arc * 0.5f);
+
+                Vector3 vLeftFromCharsOrientation = Vector3.Transform(
+                    this.Orientation, rotation);
+
+                vLeftFromCharsOrientation.Normalize();
+                vLeftFromCharsOrientation = vLeftFromCharsOrientation * sensors[index].Range + this.Position;
+
+                rotation = Matrix.CreateRotationZ(sensors[index].Arc * -0.5f);
+                Vector3 vRightFromCharsOrinetation = Vector3.Transform(
+                    this.Orientation, rotation);
+
+                vRightFromCharsOrinetation.Normalize();
+                vRightFromCharsOrinetation = vRightFromCharsOrinetation * sensors[index].Range + this.Position;
+
+                dynamicLineBatch.DrawLine(this.Position, vLeftFromCharsOrientation, Color.Gray);
+                dynamicLineBatch.DrawLine(vLeftFromCharsOrientation, vRightFromCharsOrinetation, Color.Gray);
+                dynamicLineBatch.DrawLine(vRightFromCharsOrinetation, this.Position, Color.Gray);
             }
 
         }

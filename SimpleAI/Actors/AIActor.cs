@@ -14,6 +14,7 @@ using System.Collections;
 using SimpleAI.Behaviours;
 using SimpleAI.Actors;
 using System;
+using SimpleAI.Sensors;
 namespace SimpleAI {
 	public class AIActor : IAINameOwner {
 
@@ -31,6 +32,13 @@ namespace SimpleAI {
             get { return lastGoodPosition; }
         }
          */
+
+        protected AISensors sensors;
+        public void AddSensor(ref AISensor newSensor)
+        {
+            newSensor.Owner = this;
+            sensors.Add(ref newSensor);
+        }
 
         protected int tailCapacity = 500;
         public int TailCapacity
@@ -217,6 +225,7 @@ namespace SimpleAI {
             orientation.Normalize();
 
             desiredDirection = orientation;
+            sensors = new AISensors();
 		}
 
 		~AIActor(){
@@ -253,30 +262,31 @@ namespace SimpleAI {
                 this.tail.Add(ref position);
             }
 
+            this.UpdateSensors(gameTime);
+
         }
 
-        public virtual void UpdatePosition(GameTime gameTime)
+
+        public void UpdateSensors(GameTime gameTime)
         {
-            // set a new position 
+            Matrix rotation = Matrix.Identity;
+
+            for (int index = 0; index < sensors.Count; index++)
+            {
+                sensors[index].Update(gameTime);
+            }
+
+        }
+
+        public void UpdatePosition(GameTime gameTime)
+        {
+            
             if (desiredDirection.Length() > 0.0f)
             {
                 previousPosition = position;
             }
 
-            if (motionController == null)
-            {
-                position += desiredDirection * 0.05f;
-
-                // set a new orientation
-                if (desiredOrientation.Length() > 0)
-                {
-                    orientation = desiredOrientation;
-                }
-            }
-            else
-            {
-                motionController.Update(gameTime);
-            }
+            motionController.Update(gameTime);
 
         }
 

@@ -93,8 +93,7 @@ namespace SimpleAI
                 vDes.Normalize();
   
                 owner.Orientation = vDes;
-                //owner.DesiredDirection = vDes;
-
+                
             }
             else
             {
@@ -105,15 +104,9 @@ namespace SimpleAI
             {
                 desiredChangeRaw = 0.0f;
             }
-
-            //float newSpeed = ((desiredChangeRaw  + 1.0f) * 0.5f) * maxSpeed;
+           
             float newSpeed = (desiredChangeRaw) * maxSpeed;
             owner.Position += owner.Orientation * newSpeed * timeFactor;
-
-            // set a new orientation
-                
-
-
 
         }
     }

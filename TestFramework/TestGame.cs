@@ -15,6 +15,7 @@ using TestFramework.SimpleAIEngineToGame;
 using SimpleAI.Pathfinding;
 using SimpleEngine.Core;
 using SimpleAI.Behaviours;
+using SimpleAI.Sensors;
 
 namespace TestFramework
 {
@@ -144,6 +145,9 @@ namespace TestFramework
 
             // Attach behaviour to character
             character.CurrentBehaviour = (AIBehaviour)bCycle;
+
+            AISensor aiVis = new AIVisionSensor();
+            character.AddSensor(ref aiVis);
                         
             // Instruct Drawable character what to use for rendering
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
@@ -155,7 +159,7 @@ namespace TestFramework
             lineBatch.Camera = cam;
 
             TestMapFiller mf = new TestMapFiller();
-            mf.FillMap(ref newMap);
+            mf.FillMapForAvoidDemo(ref newMap);
 
             
         }
