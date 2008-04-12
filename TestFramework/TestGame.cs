@@ -32,6 +32,16 @@ namespace TestFramework
         DynamicLineBatch lineBatch;
         AIActor character ;
         ThirdPersonCamera cam;
+
+        static KeyboardState keyState;
+
+        public static KeyboardState KeyState
+        {
+            get
+            {
+                return keyState;
+            }
+        }
         
         public TestGame()
         {
@@ -102,7 +112,6 @@ namespace TestFramework
 
             // Create and set up character
             character = new DrawableAICharacter();
-            cam.Character = character;
             character.UseTail = true;
 
             // Attach character to a map
@@ -117,6 +126,16 @@ namespace TestFramework
             character.MotionController = moCo;
             moCo.MaxRotation = 90.0f;
             moCo.MaxSpeed = 3.0f; // m/s
+
+            AIActor user = new DrawableAICharacter();
+            AIMotionController userMoCo = new UserMotionController();
+            user.MotionController = userMoCo;
+            userMoCo.MaxRotation = 90.0f;
+            userMoCo.MaxSpeed = 3.0f;
+            user.Map = newMap;
+            user.Radius = 0.5f;
+            cam.Character = user;
+            //user.Position;
 
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
 
@@ -151,9 +170,11 @@ namespace TestFramework
                         
             // Instruct Drawable character what to use for rendering
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
+            ((DrawableAICharacter)(user)).DynamicLineBatch = this.lineBatch;
             
             // Attach character to world
             aiEngine.World.Actors.Add(ref character);
+            aiEngine.World.Actors.Add(ref user);
 
             // pass information about camera to the line batcher
             lineBatch.Camera = cam;
@@ -181,6 +202,7 @@ namespace TestFramework
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();

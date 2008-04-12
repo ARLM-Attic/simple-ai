@@ -1,4 +1,4 @@
 tocTab[tocTab.length] = new Array("0:1", "", "Class Model", "EARoot/EA1.htm", "175.png", "1", "0", "", "Logical diagram");
-tocTab[tocTab.length] = new Array("1", "1", "SimpleAI", "EARoot/EA5.htm", "4.png", "", "", "{4F182CB2-8CB6-4044-870E-6433910E9A5E}", "Package");
-tocTab[tocTab.length] = new Array("2", "1", "SimpleEngine", "EARoot/EA6.htm", "4.png", "", "", "{24367650-B673-4028-96DE-6143C6F0959E}", "Package");
-tocTab[tocTab.length] = new Array("3", "1", "TestFramework", "EARoot/EA7.htm", "4.png", "", "", "{CAEB6C04-6C76-466d-8717-6F2C72BE7A08}", "Package");
+tocTab[tocTab.length] = new Array("1", "1", "SimpleAI", "EARoot/EA6.htm", "4.png", "", "", "{4F182CB2-8CB6-4044-870E-6433910E9A5E}", "Package");
+tocTab[tocTab.length] = new Array("2", "1", "SimpleEngine", "EARoot/EA7.htm", "4.png", "", "", "{24367650-B673-4028-96DE-6143C6F0959E}", "Package");
+tocTab[tocTab.length] = new Array("3", "1", "TestFramework", "EARoot/EA8.htm", "4.png", "", "", "{CAEB6C04-6C76-466d-8717-6F2C72BE7A08}", "Package");

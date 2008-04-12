@@ -5,6 +5,15 @@ using Microsoft.Xna.Framework;
 
 namespace SimpleAI.Behaviours
 {
+    /// <summary>
+    /// This behaviour allows to define a list of point which should be visited in
+    /// a sequential fashion. When last point is reached, the whole behaviour starts
+    /// over, going to point #1 and repeating sequence.
+    /// 
+    /// How it works:
+    /// A list of AIBehaviourGoto instances is being build and added to local 
+    /// subbehaviours container.
+    /// </summary>
     public class AIBehaviourCyclicRoute : AIBehaviour
     {
 
@@ -71,10 +80,6 @@ namespace SimpleAI.Behaviours
                     AIBehaviour newBehaviour = new AIBehaviourGoTo();
                     newBehaviour.Character = this.character;
                     newBehaviour.Map = this.map;
-                    /*((AIBehaviourGoTo)(newBehaviour)).StartNode = map.Node(7, 7);
-                    ((AIBehaviourGoTo)(newBehaviour)).EndNode = nodesToVisit[0];
-                    subbehaviours.Add(ref newBehaviour);
-                    */
 
                     // loop
                     for (int index = 0; index < nodesToVisit.Count - 1; index++)

@@ -37,7 +37,7 @@ namespace TestFramework.SimpleAIEngineToGame
             // the rest
             if (character != null)
             {
-                this.desiredPosition = character.Position + offset -character.DesiredOrientation * 25.0f;
+                this.desiredPosition = character.Position - character.Orientation * 25.0f + offset;
                 this.vectorLook = character.Position + new Vector3(0, 0, 0);
             }
 

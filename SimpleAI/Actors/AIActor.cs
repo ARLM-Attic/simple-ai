@@ -314,7 +314,10 @@ namespace SimpleAI {
 
         public virtual void Draw()
         {
-            currentBehaviour.Draw();
+            if (currentBehaviour != null)
+            {
+                currentBehaviour.Draw();
+            }
         }
 
     }//end AIActor

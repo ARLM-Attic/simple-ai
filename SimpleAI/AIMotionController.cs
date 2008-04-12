@@ -104,7 +104,7 @@ namespace SimpleAI
                 desiredChangeRaw = 0.0f;
             }
            
-            float newSpeed = (desiredChangeRaw) * maxSpeed;
+            float newSpeed = desiredChangeRaw * maxSpeed;
             owner.Position += owner.Orientation * newSpeed * timeFactor;
 
         }

@@ -1,1 +1,2 @@
-tocTab[tocTab.length] = new Array("3:1", "", "TestFramework", "EARoot/EA3/EA31.htm", "175.png", "6", "0", "", "Logical diagram");
+tocTab[tocTab.length] = new Array("3:1", "", "TestFramework", "EARoot/EA3/EA36.htm", "175.png", "6", "0", "", "Logical diagram");
+tocTab[tocTab.length] = new Array("3.1", "1", "SimpleAIEngineToGame", "EARoot/EA3/EA38.htm", "4.png", "", "", "{0A9E68DE-7C68-4ec5-A4BC-8853273BAB5B}", "Package");
