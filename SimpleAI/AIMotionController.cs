@@ -58,7 +58,6 @@ namespace SimpleAI
                 owner.DesiredDirection);
             float desiredChange = (float)Math.Acos(desiredChangeRaw);
 
-            //float timeFactor = gameTime.ElapsedRealTime.Milliseconds / 1000.0f;
             float timeFactor = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
             if (timeFactor == 0.0f)

@@ -25,11 +25,11 @@ namespace TestFramework.SimpleAIEngineToGame
                 }
             }
 
-            if (characters != null)
+            if (actors != null)
             {
-                for (int index = 0; index < characters.Count; index++)
+                for (int index = 0; index < actors.Count; index++)
                 {
-                    characters[index].Draw();
+                    actors[index].Draw();
                 }
             }
         }

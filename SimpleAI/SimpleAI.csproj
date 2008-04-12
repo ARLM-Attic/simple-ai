@@ -88,6 +88,7 @@
     <Compile Include="Sensors\AISensor.cs" />
     <Compile Include="Sensors\AISensors.cs" />
     <Compile Include="Sensors\AIVisionSensor.cs" />
+    <Compile Include="UserMotionController.cs" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">

@@ -1,0 +1,10 @@
+tocTab[tocTab.length] = new Array("1:1", "", "SimpleAI", "EARoot/EA1/EA8.htm", "175.png", "4", "0", "", "Logical diagram");
+tocTab[tocTab.length] = new Array("1:2", "", "AIActor", "EARoot/EA1/EA10.htm", "5.png", "20", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:3", "", "AIActors", "EARoot/EA1/EA11.htm", "5.png", "18", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:4", "", "AIEngine", "EARoot/EA1/EA12.htm", "5.png", "15", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:5", "", "AIMap", "EARoot/EA1/EA13.htm", "5.png", "19", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:6", "", "AIMaps", "EARoot/EA1/EA14.htm", "5.png", "17", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:7", "", "AIMotionControler", "EARoot/EA1/EA15.htm", "5.png", "21", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:8", "", "AITail", "EARoot/EA1/EA16.htm", "5.png", "22", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1:9", "", "AIWorld", "EARoot/EA1/EA17.htm", "5.png", "16", "0", "", "Class");
+tocTab[tocTab.length] = new Array("1.1", "1", "Behaviours", "EARoot/EA1/EA18.htm", "4.png", "", "", "{57806432-441A-4888-BE34-C44BA02819EB}", "Package");

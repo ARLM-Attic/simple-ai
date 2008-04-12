@@ -17,11 +17,11 @@ namespace SimpleAI {
 	public class AIWorld : IAINameOwner {
 
         protected AIMaps maps;
-        protected AIActors characters;
+        protected AIActors actors;
 
-        public AIActors Characters
+        public AIActors Actors
         {
-            get { return characters; }
+            get { return actors; }
         }
 
 
@@ -119,7 +119,7 @@ namespace SimpleAI {
 
             dataVersion = systemVersion;
             maps = new AIMaps();
-            characters = new AIActors();
+            actors = new AIActors();
 		}
 
 		~AIWorld(){
@@ -132,22 +132,22 @@ namespace SimpleAI {
 
         public virtual void Update(GameTime gameTime)
         {
-            if (characters != null)
+            if (actors != null)
             {
-                for (int index = 0; index < characters.Count; index++)
+                for (int index = 0; index < actors.Count; index++)
                 {
-                    characters[index].Update(gameTime);
+                    actors[index].Update(gameTime);
                 }
             }
         }
 
         public virtual void Draw()
         {
-            if (characters != null)
+            if (actors != null)
             {
-                for (int index = 0; index < characters.Count; index++)
+                for (int index = 0; index < actors.Count; index++)
                 {
-                    characters[index].Draw();
+                    actors[index].Draw();
                 }
             }
         }

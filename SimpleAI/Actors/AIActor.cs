@@ -269,8 +269,6 @@ namespace SimpleAI {
 
         public void UpdateSensors(GameTime gameTime)
         {
-            Matrix rotation = Matrix.Identity;
-
             for (int index = 0; index < sensors.Count; index++)
             {
                 sensors[index].Update(gameTime);
@@ -295,20 +293,21 @@ namespace SimpleAI {
 		}
 
         /// <summary>
-        /// Defines type to cost conversion routine for a given character
+        /// Defines type to cost conversion routine for a given character.
+        /// Intended to be overwritte by a class derived from AIActor.
         /// </summary>
         /// <returns></returns>
         public virtual byte TypeToCost(int nodeType)
         {
-            //Console.WriteLine(nodeType);
-            //Random rnd = new Random();
-            //int iRnd = 1 + (rnd.Next(3));
             if (nodeType == 0)
             {
+                // very difficult to cross, pathfinding will try to 
+                // avoid this node if possible
                 return 255;
             }
             else
             {
+                // easy to cross
                 return 1;
             }
         }

@@ -153,13 +153,14 @@ namespace TestFramework
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
             
             // Attach character to world
-            aiEngine.World.Characters.Add(ref character);
+            aiEngine.World.Actors.Add(ref character);
 
             // pass information about camera to the line batcher
             lineBatch.Camera = cam;
 
             TestMapFiller mf = new TestMapFiller();
-            mf.FillMapForAvoidDemo(ref newMap);
+            //mf.FillMapForAvoidDemo(ref newMap);
+            mf.FillMap(ref newMap);
 
             
         }
