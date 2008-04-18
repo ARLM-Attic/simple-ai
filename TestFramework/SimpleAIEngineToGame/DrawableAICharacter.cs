@@ -43,6 +43,11 @@ namespace TestFramework.SimpleAIEngineToGame
             base.Draw();    // make sure we draw behaviour(s) attached 
                             // to this character.
 
+            dynamicLineBatch.DrawLine(
+                map.Node(debugX, debugY).Position,
+                map.Node(debugX, debugY).Position + new Vector3(0, 0, 15),
+                Color.Green);
+
             dynamicLineBatch.DrawCylinder(position, 0.5f, 2.0f, 10, Color.White);            
 
             // draw desired orientation
@@ -65,6 +70,11 @@ namespace TestFramework.SimpleAIEngineToGame
                         Color.Blue);
                 }
             }
+
+            dynamicLineBatch.DrawLine(
+                desiredPosition,
+                desiredPosition + new Vector3(0, 0, 5),
+                Color.Yellow);
 
             Matrix rotation = Matrix.Identity;
                       

@@ -5,58 +5,31 @@ using Microsoft.Xna.Framework;
 
 namespace SimpleAI
 {
-    // Controls the way an AIActor moves.
-    public class AIMotionController
+    public class AIMotionControllerToPosition : AIMotionController
     {
-        protected float maxSpeed;
-        protected float maxRotation;
-        protected float maxRotationRad;
-        protected AIActor owner;
-
-        // Owner of this MotionController
-        public AIActor Owner
-        {
-            get { return owner; }
-            set { owner = value; }
-        }
-
-        // Determines the maximum rotation rate that can be achibed by a character.
-        // Units degrees per second
-        public float MaxRotation
-        {
-            get { return maxRotation; }
-            set 
-            { 
-                maxRotation = value;
-                maxRotationRad = MathHelper.ToRadians(maxRotation);
-            }
-        }
-
-        // Determines the maximum speed that can be achived by a character.
-        // Units: meters per second
-        public float MaxSpeed
-        {
-            get { return maxSpeed; }
-            set { maxSpeed = value; }
-        }
-
-        public AIMotionController()
-        {
-
-        }
-
-        ~AIMotionController()
+        public AIMotionControllerToPosition()
         {
         }
 
-        public virtual void Update(GameTime gameTime)
+        ~AIMotionControllerToPosition()
+        {
+        }
+
+        public override void Update(GameTime gameTime)
         {
             // calculate the angle between current orientation and
             // desired orientation
+            Vector3 desiredOrientation = owner.DesiredPosition - owner.Position;
+            desiredOrientation.Z = 0;
+            desiredOrientation.Normalize();
+            owner.DesiredOrientation = desiredOrientation;
+
             float desiredChangeRaw = Vector3.Dot(
                 owner.Orientation,
-                owner.DesiredDirection);
+                owner.DesiredOrientation);
             float desiredChange = (float)Math.Acos(desiredChangeRaw);
+
+            Console.WriteLine(desiredChangeRaw);
 
             float timeFactor = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
@@ -65,7 +38,7 @@ namespace SimpleAI
                 return;
             }
 
-            if (desiredChange > maxRotationRad * timeFactor)
+            if (desiredChange > maxRotationRad * timeFactor && Math.Abs(desiredChange) > 0.0f)
             {
                 // determine if we rotating clock or counter-clock wise,
                 // then aply maxRotation only
@@ -73,7 +46,7 @@ namespace SimpleAI
                 // create vector perpendicular to the desired direction;
                 Vector3 vPerpendicular = new Vector3();
                 Vector3 vUp = new Vector3(0, 0, 1);
-                Vector3 vDes = owner.DesiredDirection;
+                Vector3 vDes = owner.DesiredOrientation;
                 vDes.Normalize();
                 Vector3.Cross(ref vDes, ref vUp, out vPerpendicular);
                 bool clockWise = (Vector3.Dot(owner.Orientation, vPerpendicular) >= 0.0f);
@@ -96,17 +69,38 @@ namespace SimpleAI
             }
             else
             {
-                owner.Orientation = owner.DesiredDirection;
+                owner.Orientation = owner.DesiredOrientation;
             }
 
             if (desiredChangeRaw < 0.0f)
             {
                 desiredChangeRaw = 0.0f;
             }
-           
-            float newSpeed =  (1 + desiredChangeRaw) * 0.5f * maxSpeed;
-            owner.Position += owner.Orientation * newSpeed * timeFactor;
+
+
+            float distanceToDesired = ((Vector3)(owner.DesiredPosition - owner.Position)).Length();
+
+            float newSpeed = (1 + desiredChangeRaw) * 0.5f * maxSpeed;
+            float distanceThisStep = newSpeed * timeFactor * distanceToDesired * 0.25f;
+
+
+            if (distanceToDesired < distanceThisStep)
+            {
+                distanceThisStep = distanceToDesired;
+            }
+
+
+
+
+            if (distanceToDesired < 0.11f)
+            {
+                return;
+            }
+
+
+            owner.Position += owner.Orientation * distanceThisStep;//newSpeed * timeFactor;
 
         }
+
     }
 }

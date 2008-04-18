@@ -94,13 +94,13 @@ namespace TestFramework
             spriteBatch = new SpriteBatch(GraphicsDevice);
             lineBatch = new DynamicLineBatch(GraphicsDevice);
                         
-            AIMap newMap = new DrawableAIMap(GraphicsDevice, 55, 55, 100.0f, 100.0f);
+            AIMap newMap = new DrawableAIMap(GraphicsDevice, 15, 15, 60.0f, 60.0f);
             aiEngine.World.Maps.Add(ref newMap);
 
             cam = new ThirdPersonCamera((Game)this);
 
-            cam.DesiredPosition = new Vector3(0.0f, 50.0f, 50.0f);
-            cam.Position = new Vector3(0.0f, 50.0f, 50.0f);
+            cam.DesiredPosition = new Vector3(0.0f, 5.0f, 50.0f);
+            cam.Position = new Vector3(0.0f, 5.0f, 50.0f);
             cam.LookAt = new Vector3(0.0f, 0.0f, 0.0f);
             
             ((DrawableAIMap)(newMap)).Camera = cam;
@@ -118,7 +118,7 @@ namespace TestFramework
             character.Map = newMap;
 
             // Reposition character
-            character.Position = newMap.Node(7, 7).Position;
+            character.Position = newMap.Node(0, 0).Position;
             // space occuppier by our character
             character.Radius = 0.5f;
 
@@ -134,11 +134,12 @@ namespace TestFramework
             userMoCo.MaxSpeed = 3.0f;
             user.Map = newMap;
             user.Radius = 0.5f;
+            user.UseTail = true;
             cam.Character = user;
             //user.Position;
 
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
-
+            /*
             // 1st node
             AINode tmpNode = newMap.Node(5, 5);
             bCycle.AddPoint(ref tmpNode);
@@ -170,10 +171,11 @@ namespace TestFramework
                         
             // Instruct Drawable character what to use for rendering
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
+             */
             ((DrawableAICharacter)(user)).DynamicLineBatch = this.lineBatch;
             
             // Attach character to world
-            aiEngine.World.Actors.Add(ref character);
+            //aiEngine.World.Actors.Add(ref character);
             aiEngine.World.Actors.Add(ref user);
 
             // pass information about camera to the line batcher
@@ -181,7 +183,81 @@ namespace TestFramework
 
             TestMapFiller mf = new TestMapFiller();
             //mf.FillMapForAvoidDemo(ref newMap);
-            mf.FillMap(ref newMap);
+            //mf.FillMap(ref newMap);
+
+
+
+
+            //
+            AIActor groupMember = new DrawableAICharacter();
+            AIMotionController groupMoCo = new AIMotionControllerToPosition();
+            groupMember.MotionController = groupMoCo;
+            groupMoCo.MaxRotation = 90.0f;
+            groupMoCo.MaxSpeed = 3.0f;
+            groupMember.Map = newMap;
+            groupMember.Radius = 0.5f;
+            AIBehaviourStayInFormation groupStayInFormationBeh = new AIBehaviourStayInFormation();
+            groupMember.CurrentBehaviour = (AIBehaviour)groupStayInFormationBeh;
+            groupStayInFormationBeh.Leader = user;
+            groupStayInFormationBeh.Offset = new Vector3(-1, 1, 0);
+            groupMember.Position = new Vector3(5,5,0);
+            ((DrawableAICharacter)groupMember).DynamicLineBatch = lineBatch;
+            groupMember.Name = "groupMember";
+            aiEngine.World.Actors.Add(ref groupMember);
+
+            groupMember = new DrawableAICharacter();
+            groupMoCo = new AIMotionControllerToPosition();
+            groupMember.MotionController = groupMoCo;
+            groupMoCo.MaxRotation = 90.0f;
+            groupMoCo.MaxSpeed = 3.0f;
+            groupMember.Map = newMap;
+            groupMember.Radius = 0.5f;
+            groupStayInFormationBeh = new AIBehaviourStayInFormation();
+            groupMember.CurrentBehaviour = (AIBehaviour)groupStayInFormationBeh;
+            groupStayInFormationBeh.Leader = user;
+            groupStayInFormationBeh.Offset = new Vector3(1, 1, 0);
+            groupMember.Position = new Vector3(5, 5, 0);
+            ((DrawableAICharacter)groupMember).DynamicLineBatch = lineBatch;
+            groupMember.Name = "groupMember";
+            aiEngine.World.Actors.Add(ref groupMember);
+
+            groupMember = new DrawableAICharacter();
+            groupMoCo = new AIMotionControllerToPosition();
+            groupMember.MotionController = groupMoCo;
+            groupMoCo.MaxRotation = 90.0f;
+            groupMoCo.MaxSpeed = 3.0f;
+            groupMember.Map = newMap;
+            groupMember.Radius = 0.5f;
+            groupStayInFormationBeh = new AIBehaviourStayInFormation();
+            groupMember.CurrentBehaviour = (AIBehaviour)groupStayInFormationBeh;
+            groupStayInFormationBeh.Leader = user;
+            groupStayInFormationBeh.Offset = new Vector3(1, 2.5f, 0);
+            groupMember.Position = new Vector3(5, 5, 0);
+            ((DrawableAICharacter)groupMember).DynamicLineBatch = lineBatch;
+            groupMember.Name = "groupMember";
+            aiEngine.World.Actors.Add(ref groupMember);
+
+            groupMember = new DrawableAICharacter();
+            groupMoCo = new AIMotionControllerToPosition();
+            groupMember.MotionController = groupMoCo;
+            groupMoCo.MaxRotation = 90.0f;
+            groupMoCo.MaxSpeed = 3.0f;
+            groupMember.Map = newMap;
+            groupMember.Radius = 0.5f;
+            groupStayInFormationBeh = new AIBehaviourStayInFormation();
+            groupMember.CurrentBehaviour = (AIBehaviour)groupStayInFormationBeh;
+            groupStayInFormationBeh.Leader = user;
+            groupStayInFormationBeh.Offset = new Vector3(-1, 2.5f, 0);
+            groupMember.Position = new Vector3(5, 5, 0);
+            ((DrawableAICharacter)groupMember).DynamicLineBatch = lineBatch;
+            groupMember.Name = "groupMember";
+            aiEngine.World.Actors.Add(ref groupMember);
+
+
+        
+
+
+
 
             
         }

@@ -38,9 +38,6 @@ namespace TestFramework
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
 
-            //Console.WriteLine("X="+GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X.ToString());
-            //Console.WriteLine("Y="+GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y.ToString());
-
             float timeFactor = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
             if (timeFactor == 0.0f)
@@ -49,8 +46,6 @@ namespace TestFramework
             }
 
             float desiredChange = MathHelper.ToRadians(maxRotation) * timeFactor * -GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.X;
-
-            //Console.WriteLine(desiredChange.ToString());
 
             // rotate Orientation vector by desiredCharge
             Matrix rotation = Matrix.Identity;
@@ -62,10 +57,7 @@ namespace TestFramework
             owner.Orientation = vDes;
             owner.Position = owner.Position +
                 owner.Orientation * maxSpeed * GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y * timeFactor;
-            Console.WriteLine(GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y.ToString());
-            // set the desired orientation and speed using controller input,
-            // then simply call base functionality to do the legwork
-            //base.Update(gameTime);
+
         }
     }
 }

@@ -11,6 +11,7 @@
 
 using SimpleAI;
 using Microsoft.Xna.Framework;
+using System;
 namespace SimpleAI {
 	public class AIMap : IAINameOwner {
 
@@ -22,11 +23,48 @@ namespace SimpleAI {
         protected float horizontalSpan;
         protected float verticalSpan;
 
+        protected bool transformationDirty = true;
+
         protected Vector3 position;
         public Vector3 Position
         {
             get { return position; }
-            set { position = value; }
+            set 
+            { 
+                position = value;
+                transformationDirty = true;
+            }
+        }
+
+        protected Vector3 rotation;
+        public Vector3 Rotation
+        {
+            get { return rotation; }
+            set 
+            { 
+                rotation = value;
+                transformationDirty = true;
+            }
+        }
+
+        protected Matrix transformation;
+        public Matrix Transformation
+        {
+            get
+            {
+                if (transformationDirty == true)
+                {
+                    Vector3 baseOrientation = new Vector3(0, 1, 0);
+                    float dotProduct = Vector3.Dot(baseOrientation, rotation);
+                    float radiansToRotate = (float)Math.Acos((double)(dotProduct));
+                    
+                    transformation = 
+                        Matrix.CreateRotationZ(radiansToRotate) *
+                        Matrix.CreateTranslation(this.position);
+                }
+                transformationDirty = false;
+                return transformation;
+            }
         }
 
         /// <summary>
@@ -85,7 +123,7 @@ namespace SimpleAI {
                 {
                     AINode newNode = new AINode();
                     newNode.Parent = this;
-                    newNode.Type = 1 + iWidth;// / (iHeight + 1);
+                    newNode.Type = 1;// +iWidth;// / (iHeight + 1);
                     newNode.X = iWidth;
                     newNode.Y = iHeight;
                     newNode.Position = new Vector3(
@@ -143,9 +181,16 @@ namespace SimpleAI {
         /// <returns></returns>
 		public AINode Node(int width, int height){
 
-			return nodes[width, height];
+            if (width >= 0 && width <= this.width - 1)
+            {
+                if (height >= 0 && height <= this.height - 1)
+                {
+                    return nodes[width, height];
+                }
+            }
+            return null;
 		}
 
 	}//end AIMap
 
-}//end namespace SimpleAI
+}//end namespace SimpleA

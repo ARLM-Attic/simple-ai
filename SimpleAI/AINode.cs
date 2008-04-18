@@ -10,6 +10,7 @@
 
 
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 namespace SimpleAI {
 
     /// <summary>
@@ -24,6 +25,12 @@ namespace SimpleAI {
         private int x;
         private int y;
         private Vector3 position;
+
+        private List<AIActor> actors;
+        public List<AIActor> Actors
+        {
+            get { return actors; }
+        }
 
         /// <summary>
         /// Center position of a node
@@ -72,6 +79,7 @@ namespace SimpleAI {
 
 
 		public AINode(){
+            actors = new List<AIActor>(10);
 
 		}
 

@@ -15,6 +15,7 @@ using SimpleAI.Behaviours;
 using SimpleAI.Actors;
 using System;
 using SimpleAI.Sensors;
+using System.Collections.Generic;
 namespace SimpleAI {
 	public class AIActor : IAINameOwner {
 
@@ -32,6 +33,17 @@ namespace SimpleAI {
             get { return lastGoodPosition; }
         }
          */
+
+        protected int debugX;
+        protected int debugY;
+
+
+        protected List<AINode> nodesIamIn;
+
+        public List<AINode> NodesIamIn
+        {
+            get { return nodesIamIn; }
+        }
 
         protected AISensors sensors;
         public void AddSensor(ref AISensor newSensor)
@@ -75,6 +87,10 @@ namespace SimpleAI {
         }
 
         protected AITail tail;
+        public AITail Tail
+        {
+            get { return tail; }
+        }
 
         protected AIMotionController motionController;
         public AIMotionController MotionController
@@ -126,6 +142,13 @@ namespace SimpleAI {
                 this.position = value;
                 this.isDirty = true;
             }
+        }
+
+        protected Vector3 desiredPosition;
+        public Vector3 DesiredPosition
+        {
+            get { return desiredPosition; }
+            set { desiredPosition = value; }
         }
 
         protected Vector3 desiredDirection;
@@ -226,6 +249,10 @@ namespace SimpleAI {
 
             desiredDirection = orientation;
             sensors = new AISensors();
+
+            nodesIamIn = new List<AINode>(4); // <== assuming that an actor will not occupy more then
+                                              // 4 nodes -> this could be a problem in case of
+                                              // of really large actors.
 		}
 
 		~AIActor(){
@@ -246,6 +273,48 @@ namespace SimpleAI {
 
         }
 
+        /// <summary>
+        /// Every time an actor changes its position, it remembers all map's nodes
+        /// he is in.
+        /// </summary>
+        public void UpdateLocationData()
+        {
+            // 1. remove itself from all previous AINodes
+            for (int index = 0; index < nodesIamIn.Count; index++)
+            {
+                // remove myself from AINode I was registered previously
+                nodesIamIn[index].Actors.Remove(this);
+            }
+
+            nodesIamIn.Clear();
+
+            // 2. add itself to all 
+            // - get distance from the center of a map,
+            // - extract x and y components,
+            // - for each component calculate row and col
+
+            Vector3 vDistanceFromMapCenter = this.position - map.Position;
+
+            float xComponent = (vDistanceFromMapCenter.X / (map.HorizontalSpan / ((float)map.Width )));
+            float yComponent = (vDistanceFromMapCenter.Y / (map.VerticalSpan / ((float)map.Height )));
+
+            xComponent = (map.Width  * 0.5f) + xComponent + 0.5f ;
+            yComponent = (map.Height * 0.5f) + yComponent +0.5f;
+
+            debugX = (int)xComponent;
+            debugY = (int)yComponent;
+
+            int indexX = (int)xComponent;
+            int indexY = (int)yComponent;
+
+            AINode desiredNode = map.Node(indexX, indexY);
+
+            // am I out of map?
+            desiredNode.Actors.Add(this);
+            nodesIamIn.Add(desiredNode);
+
+        }
+
         public void Update(GameTime gameTime)
         {
 
@@ -263,6 +332,7 @@ namespace SimpleAI {
             }
 
             this.UpdateSensors(gameTime);
+            this.UpdateLocationData();
 
         }
 

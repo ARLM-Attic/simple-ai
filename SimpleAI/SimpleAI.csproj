@@ -59,6 +59,7 @@
     <Compile Include="Actors\AITail.cs" />
     <Compile Include="AIEdge.cs" />
     <Compile Include="AIMotionController.cs" />
+    <Compile Include="AIMotionControllerToPosition.cs" />
     <Compile Include="Behaviours\AIBehaviour.cs" />
     <Compile Include="Behaviours\AIBehaviourCyclicRoute.cs" />
     <Compile Include="Behaviours\AIBehaviourFindPath.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="AINode.cs" />
     <Compile Include="Behaviours\AIBehaviourGoTo.cs" />
     <Compile Include="Behaviours\AIBehaviourState.cs" />
+    <Compile Include="Behaviours\AIBehaviourStayInFormation.cs" />
     <Compile Include="Behaviours\AIFollowPathNode.cs" />
     <Compile Include="Behaviours\AISubbehaviours.cs" />
     <Compile Include="Actors\AIActor.cs" />
