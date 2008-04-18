@@ -1,3 +1,2 @@
-tocTab[tocTab.length] = new Array("1.2:1", "", "MotionControlling", "EARoot/EA1/EA2/EA30.htm", "175.png", "8", "0", "", "Logical diagram");
-tocTab[tocTab.length] = new Array("1.2:2", "", "AIMotionController", "EARoot/EA1/EA2/EA32.htm", "5.png", "21", "0", "", "Class");
-tocTab[tocTab.length] = new Array("1.2:3", "", "UserMotionController", "EARoot/EA1/EA2/EA33.htm", "5.png", "37", "0", "", "Class");
+tocTab[tocTab.length] = new Array("2:1", "", "MotionControlling", "EARoot/EA2/EA25.htm", "175.png", "8", "0", "", "Logical diagram");
+tocTab[tocTab.length] = new Array("2:2", "", "AIMotionController", "EARoot/EA2/EA27.htm", "5.png", "21", "0", "", "Class");

@@ -29,8 +29,6 @@ namespace SimpleAI
                 owner.DesiredOrientation);
             float desiredChange = (float)Math.Acos(desiredChangeRaw);
 
-            Console.WriteLine(desiredChangeRaw);
-
             float timeFactor = gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 
             if (timeFactor == 0.0f)
