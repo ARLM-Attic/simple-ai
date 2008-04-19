@@ -6,11 +6,31 @@ using SimpleAI;
 using SimpleEngine.Core;
 using SimpleAI.Behaviours;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TestFramework.SimpleAIEngineToGame
 {
     public class DrawableAIGroupFormationAlpha : AIGroup
     {
+
+        protected Color color;
+        public Color Color
+        {
+            get { return this.color; }
+            set
+            {
+                this.color = value;
+
+                if (this.actors != null)
+                {
+                    for (int index = 0; index < this.actors.Count; index++)
+                    {
+                        ((DrawableAICharacter)(this.actors[index])).DebugColor = value;
+                    }
+                }
+            }
+        }
+
         protected DynamicLineBatch lineBatch;
         public DynamicLineBatch LineBatch
         {

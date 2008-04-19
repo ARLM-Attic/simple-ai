@@ -117,64 +117,73 @@ namespace SimpleAI
             //owner.NodesIamIn[0].;
             List<AINode> nodesToConsider = new List<AINode>(9);
 
-            //nodesToConsider.Add(owner.NodesIamIn[0]);
-            int xIndex = owner.NodesIamIn[0].X;
-            int yIndex = owner.NodesIamIn[0].Y;
+            nodesToConsider.Clear();
 
-            for (int x = -1; x <= 1; x++)
+            int loopCounter = 2;
+
+            for (int loop = 0; loop < loopCounter; loop++)
             {
-                for (int y = -1; y <= 1; y++)
+
+                //nodesToConsider.Add(owner.NodesIamIn[0]);
+                int xIndex = owner.NodesIamIn[0].X;
+                int yIndex = owner.NodesIamIn[0].Y;
+
+                for (int x = -1; x <= 1; x++)
                 {
-                    int nodeX = xIndex + x;
-                    int nodeY = yIndex + y;
-
-                    if (nodeX > 0 && nodeY > 0 && nodeX < owner.Map.Width && nodeY < owner.Map.Height)
+                    for (int y = -1; y <= 1; y++)
                     {
-                        nodesToConsider.Add(owner.Map.Node(nodeX, nodeY));
-                    }
+                        int nodeX = xIndex + x;
+                        int nodeY = yIndex + y;
 
-                }
-            }
-
-            Vector3 flockingVector = new Vector3(0);
-
-            for (int nodeIndex = 0; nodeIndex < nodesToConsider.Count; nodeIndex++)
-            {
-                for (int actorIndex = 0; actorIndex < nodesToConsider[nodeIndex].Actors.Count; actorIndex++)
-                {
-                    if (nodesToConsider[nodeIndex].Actors[actorIndex] != owner)
-                    {
-                        Vector3 vDistance = owner.Position - nodesToConsider[nodeIndex].Actors[actorIndex].Position;
-                        float fDistance = vDistance.Length();
-                        if (fDistance <  4.0f * owner.Radius)
+                        if (nodeX > 0 && nodeY > 0 && nodeX < owner.Map.Width && nodeY < owner.Map.Height)
                         {
-                            // this is too close! I want to avoid this
-                            if (fDistance != 0.0f)
+                            nodesToConsider.Add(owner.Map.Node(nodeX, nodeY));
+                        }
+
+                    }
+                }
+
+                Vector3 flockingVector = new Vector3(0);
+
+                for (int nodeIndex = 0; nodeIndex < nodesToConsider.Count; nodeIndex++)
+                {
+                    for (int actorIndex = 0; actorIndex < nodesToConsider[nodeIndex].Actors.Count; actorIndex++)
+                    {
+                        if (nodesToConsider[nodeIndex].Actors[actorIndex] != owner)
+                        {
+                            Vector3 vDistance = owner.Position - nodesToConsider[nodeIndex].Actors[actorIndex].Position;
+                            float fDistance = vDistance.Length();
+                            if (fDistance < 4.0f * owner.Radius)
                             {
-                                vDistance.Normalize();
+                                // this is too close! I want to avoid this
+                                if (fDistance != 0.0f)
+                                {
+                                    vDistance.Normalize();
+                                }
+                                else
+                                {
+                                    // a way to generate random vector. ish.
+                                    vDistance = new Vector3(nodeIndex + 1, actorIndex + 1, 0);
+                                    vDistance.Normalize();
+                                }
+                                float force = 4.0f * owner.Radius - fDistance;
+                                flockingVector = flockingVector + vDistance * force;
                             }
-                            else
-                            {
-                                // a way to generate random vector. ish.
-                                vDistance = new Vector3(nodeIndex + 1, actorIndex + 1, 0);
-                                vDistance.Normalize();
-                            }
-                            float force = 4.0f * owner.Radius - fDistance;
-                            flockingVector = flockingVector + vDistance * force;
                         }
                     }
                 }
+
+                flockingVector = flockingVector + owner.DesiredPosition - owner.Position;
+                flockingVector.Z = 0.0f;
+
+                if (flockingVector.Length() > 0.0f)
+                {
+                    flockingVector.Normalize();
+                }
+
+                owner.Position += flockingVector * distanceThisStep / loopCounter;//newSpeed * timeFactor;
+
             }
-
-            flockingVector = flockingVector + owner.DesiredPosition - owner.Position;
-            flockingVector.Z = 0.0f;
-
-            if (flockingVector.Length() > 0.0f)
-            {
-                flockingVector.Normalize();
-            }
-
-            owner.Position += flockingVector * distanceThisStep;//newSpeed * timeFactor;
 
         }
 

@@ -136,11 +136,11 @@ namespace TestFramework
             user.Radius = 0.5f;
             user.UseTail = true;
             cam.Character = user;
-             * /
+             */
             //user.Position;
 
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
-            /*
+            
             // 1st node
             AINode tmpNode = newMap.Node(5, 5);
             bCycle.AddPoint(ref tmpNode);
@@ -163,7 +163,7 @@ namespace TestFramework
 
             // use our dynamic line batch for behaviour rendering
             ((DrawableAIBehaviourCycleRoute)(bCycle)).LineBatch = this.lineBatch;
-
+            /*
             // Attach behaviour to character
             character.CurrentBehaviour = (AIBehaviour)bCycle;
 
@@ -256,15 +256,34 @@ namespace TestFramework
 
 
         */
-            DrawableAIGroupFormationAlpha groupA = new DrawableAIGroupFormationAlpha(191);
+            DrawableAIGroupFormationAlpha groupA = new DrawableAIGroupFormationAlpha(81);
             groupA.LineBatch = lineBatch;
+            AIMotionController leaderMoCo = new AIMotionController();
+            leaderMoCo.MaxSpeed = 1.0f;
+            leaderMoCo.MaxRotation = 45.0f;
             
             groupA.SetMembersDistribution(3, 70, 1.5f, 1.5f);
             groupA.RegisterActors(ref aiEngine);
-            groupA.Actors[0].MotionController = userMoCo;
+            groupA.Actors[0].MotionController = leaderMoCo;// userMoCo;
+            groupA.Actors[0].CurrentBehaviour = bCycle;
             cam.Character = groupA.Actors[0];
             groupA.Actors[0].UseTail = true;
             groupA.Map = newMap;
+            groupA.Color = Color.Yellow;
+
+
+
+            DrawableAIGroupFormationAlpha groupB = new DrawableAIGroupFormationAlpha(81);
+            groupB.LineBatch = lineBatch;
+            groupB.SetMembersDistribution(3, 70, 1.5f, 1.5f);
+            groupB.RegisterActors(ref aiEngine);
+            userMoCo.MaxSpeed = 1.0f;
+            groupB.Actors[0].MotionController = userMoCo;
+            cam.Character = groupB.Actors[0];
+            groupB.Actors[0].UseTail = true;
+            groupB.Map = newMap;
+            groupB.Color = Color.CornflowerBlue;
+
 
 
 
