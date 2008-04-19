@@ -94,7 +94,7 @@ namespace TestFramework
             spriteBatch = new SpriteBatch(GraphicsDevice);
             lineBatch = new DynamicLineBatch(GraphicsDevice);
                         
-            AIMap newMap = new DrawableAIMap(GraphicsDevice, 15, 15, 60.0f, 60.0f);
+            AIMap newMap = new DrawableAIMap(GraphicsDevice, 75, 75, 120.0f, 120.0f);
             aiEngine.World.Maps.Add(ref newMap);
 
             cam = new ThirdPersonCamera((Game)this);
@@ -127,15 +127,16 @@ namespace TestFramework
             moCo.MaxRotation = 90.0f;
             moCo.MaxSpeed = 3.0f; // m/s
 
-            AIActor user = new DrawableAICharacter();
+            //AIActor user = new DrawableAICharacter();
             AIMotionController userMoCo = new UserMotionController();
-            user.MotionController = userMoCo;
+            //user.MotionController = userMoCo;
             userMoCo.MaxRotation = 90.0f;
             userMoCo.MaxSpeed = 3.0f;
-            user.Map = newMap;
+            /*user.Map = newMap;
             user.Radius = 0.5f;
             user.UseTail = true;
             cam.Character = user;
+             * /
             //user.Position;
 
             AIBehaviourCyclicRoute bCycle = new DrawableAIBehaviourCycleRoute();
@@ -172,11 +173,11 @@ namespace TestFramework
             // Instruct Drawable character what to use for rendering
             ((DrawableAICharacter)(character)).DynamicLineBatch = this.lineBatch;
              */
-            ((DrawableAICharacter)(user)).DynamicLineBatch = this.lineBatch;
+            //((DrawableAICharacter)(user)).DynamicLineBatch = this.lineBatch;
             
             // Attach character to world
             //aiEngine.World.Actors.Add(ref character);
-            aiEngine.World.Actors.Add(ref user);
+            //aiEngine.World.Actors.Add(ref user);
 
             // pass information about camera to the line batcher
             lineBatch.Camera = cam;
@@ -189,7 +190,7 @@ namespace TestFramework
 
 
             //
-            AIActor groupMember = new DrawableAICharacter();
+/*            AIActor groupMember = new DrawableAICharacter();
             AIMotionController groupMoCo = new AIMotionControllerToPosition();
             groupMember.MotionController = groupMoCo;
             groupMoCo.MaxRotation = 90.0f;
@@ -254,7 +255,17 @@ namespace TestFramework
             aiEngine.World.Actors.Add(ref groupMember);
 
 
-        
+        */
+            DrawableAIGroupFormationAlpha groupA = new DrawableAIGroupFormationAlpha(191);
+            groupA.LineBatch = lineBatch;
+            
+            groupA.SetMembersDistribution(3, 70, 1.5f, 1.5f);
+            groupA.RegisterActors(ref aiEngine);
+            groupA.Actors[0].MotionController = userMoCo;
+            cam.Character = groupA.Actors[0];
+            groupA.Actors[0].UseTail = true;
+            groupA.Map = newMap;
+
 
 
 

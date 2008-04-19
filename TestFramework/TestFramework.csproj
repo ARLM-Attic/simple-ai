@@ -79,6 +79,8 @@
     <Compile Include="SimpleAIEngineToGame\DrawableAIBehaviourCycleRoute.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAIBehaviourGoTo.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAICharacter.cs" />
+    <Compile Include="SimpleAIEngineToGame\DrawableAIFormation.cs" />
+    <Compile Include="SimpleAIEngineToGame\DrawableAIGroupFormationAlpha.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAIMap.cs" />
     <Compile Include="SimpleAIEngineToGame\DrawableAIWorld.cs" />
     <Compile Include="SimpleAIEngineToGame\TestMapFiller.cs" />

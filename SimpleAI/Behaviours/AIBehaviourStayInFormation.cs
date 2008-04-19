@@ -85,13 +85,14 @@ namespace SimpleAI.Behaviours
 
             // estimate tail element we are going to follow
             int estimatedIndex = (int)(offset.Y / leader.Tail.MinDistance);
-            if (estimatedIndex == 0)
-            {
-                estimatedIndex = 1;
-            }
 
             // reverse edtimated index:
             estimatedIndex = leader.Tail.Count - estimatedIndex;
+
+            if (estimatedIndex < 1)
+            {
+                estimatedIndex = 1;
+            }
 
             Vector3 segmentDirection = leader.Tail[estimatedIndex - 1] - leader.Tail[estimatedIndex];
             segmentDirection.Normalize();

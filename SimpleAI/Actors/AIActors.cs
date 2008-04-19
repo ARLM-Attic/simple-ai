@@ -40,9 +40,20 @@ namespace SimpleAI {
             characters = new List<AIActor>(initialCapacity);
 		}
 
+        public AIActors(int initialCapacity)
+        {
+            this.initialCapacity = initialCapacity;
+            characters = new List<AIActor>(initialCapacity);
+        }
+
         public int Count
         {
             get { return characters.Count; }
+        }
+
+        public int Capacity
+        {
+            get { return characters.Capacity; }
         }
 
         public void Add(ref AIActor newCharacter)

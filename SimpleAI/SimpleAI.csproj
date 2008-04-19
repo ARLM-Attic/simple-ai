@@ -56,10 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\AIGroup.cs" />
     <Compile Include="Actors\AITail.cs" />
     <Compile Include="AIEdge.cs" />
-    <Compile Include="AIMotionController.cs" />
-    <Compile Include="AIMotionControllerToPosition.cs" />
+    <Compile Include="MotionControll\AIMotionController.cs" />
+    <Compile Include="MotionControll\AIMotionControllerToPosition.cs" />
+    <Compile Include="MotionControll\AIMotionControllerWithDynamicAvoidance.cs" />
     <Compile Include="Behaviours\AIBehaviour.cs" />
     <Compile Include="Behaviours\AIBehaviourCyclicRoute.cs" />
     <Compile Include="Behaviours\AIBehaviourFindPath.cs" />

@@ -32,6 +32,35 @@ namespace TestFramework.SimpleAIEngineToGame
 
         public DrawableAICharacter()
         {
+            debugColor = Color.White;
+        }
+
+        protected bool drawDesiredPosition = false;
+        public bool DrawDesiredPosition
+        {
+            get { return drawDesiredPosition; }
+            set { drawDesiredPosition = value; }
+        }
+     
+        protected bool drawDesiredOrientation = false;
+        public bool DrawDesiredOrientation
+        {
+            get { return drawDesiredOrientation; }
+            set { drawDesiredOrientation = value; }
+        }
+
+        protected bool drawOrientation = false;
+        public bool DrawOrientation
+        {
+            get { return drawOrientation; }
+            set { drawOrientation = value; }
+        }
+
+        protected bool drawNodeAtPosition = false;
+        public bool DrawNodeAtPosition
+        {
+            get { return drawNodeAtPosition; }
+            set { drawNodeAtPosition = value; }
         }
 
         ~DrawableAICharacter()
@@ -43,22 +72,30 @@ namespace TestFramework.SimpleAIEngineToGame
             base.Draw();    // make sure we draw behaviour(s) attached 
                             // to this character.
 
-            dynamicLineBatch.DrawLine(
-                map.Node(debugX, debugY).Position,
-                map.Node(debugX, debugY).Position + new Vector3(0, 0, 15),
-                Color.Green);
+            if (drawNodeAtPosition)
+            {
+                dynamicLineBatch.DrawLine(
+                    map.Node(debugX, debugY).Position,
+                    map.Node(debugX, debugY).Position + new Vector3(0, 0, 15),
+                    Color.Green);
+            }
 
-            dynamicLineBatch.DrawCylinder(position, 0.5f, 2.0f, 10, Color.White);            
+            dynamicLineBatch.DrawCylinder(position, 0.5f, 0.0f, 10, debugColor);
 
-            // draw desired orientation
             Vector3 halfSize = new Vector3(0, 0, 1);
-            dynamicLineBatch.DrawLine(position + halfSize,
-                                      position + halfSize + this.Orientation * 4.0f,
-                                      Color.GreenYellow);
+            if (drawOrientation)
+            {
+                dynamicLineBatch.DrawLine(position + halfSize,
+                                          position + halfSize + this.Orientation * 4.0f,
+                                          Color.GreenYellow);
+            }
 
-            dynamicLineBatch.DrawLine(position + halfSize * 0.5f,
-                          position + halfSize * 0.5f + this.desiredOrientation * 4.0f,
-                          Color.Purple);
+            if (drawDesiredOrientation)
+            {
+                dynamicLineBatch.DrawLine(position + halfSize * 0.5f,
+                              position + halfSize * 0.5f + this.desiredOrientation * 4.0f,
+                              Color.Purple);
+            }
 
             if (useTail)
             {
@@ -71,10 +108,13 @@ namespace TestFramework.SimpleAIEngineToGame
                 }
             }
 
-            dynamicLineBatch.DrawLine(
-                desiredPosition,
-                desiredPosition + new Vector3(0, 0, 5),
-                Color.Yellow);
+            if (drawDesiredPosition)
+            {
+                dynamicLineBatch.DrawLine(
+                    desiredPosition,
+                    desiredPosition + new Vector3(0, 0, 5),
+                    Color.Yellow);
+            }
 
             Matrix rotation = Matrix.Identity;
                       

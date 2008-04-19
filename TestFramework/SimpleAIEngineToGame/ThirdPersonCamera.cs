@@ -28,7 +28,7 @@ namespace TestFramework.SimpleAIEngineToGame
             : base(game)
         {
             // set up some default offset
-            offset = new Vector3(0, 0, 10);
+            offset = new Vector3(0, 0, 50);
         }
 
         public override void Update(GameTime gameTime)
@@ -37,7 +37,7 @@ namespace TestFramework.SimpleAIEngineToGame
             // the rest
             if (character != null)
             {
-                this.desiredPosition = character.Position - character.Orientation * 25.0f + offset;
+                this.desiredPosition = character.Position - character.Orientation * 0.0f + offset;
                 this.vectorLook = character.Position + new Vector3(0, 0, 0);
             }
 
